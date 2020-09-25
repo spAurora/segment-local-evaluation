@@ -13,10 +13,27 @@ void CheckRegionNum(int regionNum)
 	printf("check regionNum:%d\n", regionNum);
 }
 
+void CheckRG(int* rg_labels, int width, int height)
+{
+	int count_0 = 0, count_255 = 0;
+	for (int i = 0; i<height; i++)
+		for (int j = 0; j<width;j++)
+		{
+			if (rg_labels[i*width+j] == 0)
+				count_0++;
+			else if (rg_labels[i*width+j] == 255)
+				count_255++;
+		}
+	printf("-----------\n");
+	printf("check RG:\n");
+	printf("count 0 = %d\n", count_0);
+	printf("count 255 = %d\n", count_255);
+}
+
 void CheckRegionSet(CRegion* cRegion)
 {
 	printf("-----------\n");
-	printf("check region set:\n region_0 pixelnum:%d\n", cRegion[0].pixelnum);
+	printf("check region set:\nregion_0 pixelnum:%d\n", cRegion[0].pixelnum);
 }
 
 void CheckGplot(ArrayHeadGraphNode* head)

@@ -21,6 +21,7 @@
 #include "LocalEvaluation.h"
 #include "Check.h"
 
+using namespace std;
 using namespace cv;
 
 #pragma comment(linker, "/STACK:102400000,102400000")    //防止栈溢出
@@ -28,7 +29,7 @@ using namespace cv;
 int main()
 {
 	int width, height;
-	Mat srimg;
+	Mat srimg, RG_img;
 
 	srimg = imread("./test_data/test_img.png",1);
 	if (srimg.empty())
@@ -40,8 +41,20 @@ int main()
 	width = srimg.cols;
 	height = srimg.rows;
 
+	RG_img = imread("./test_data/RG.bmp",0);
+	if (RG_img.empty())
+	{
+		printf("Can not open Image\n");
+		system("pause");
+		exit(0);
+	}
+	int *rg_labels = new int[height*width]; //参考地物对象图层
+	for(int i = 0; i<height; i++)
+		for(int j = 0; j<width; j++)
+			rg_labels[i*width+j] = (int)RG_img.data[i*width+j];
+	CheckRG(rg_labels, width, height);
+
 	int *labels = new int[height*width];    //以labels方式储存的分割结果
-	
 	FILE* fp; 
 	if((fp = fopen("./test_data/RS.txt", "r+")) == NULL)
 	{
@@ -64,6 +77,8 @@ int main()
 	CreateToplogicalGraph(labels, head, regionNum, width, height);
 	CheckRegionSet(cRegion);
 	CheckGplot(head);
+
+	/*建立参考地物对象集合*/
 
 	system("pause");
 	return 0;

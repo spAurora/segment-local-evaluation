@@ -11,7 +11,7 @@ class CRegion
 {
 public:
 	int id;   //区域编号
-	vector<int> poxelLocation;   //区域的各个像素位置
+	vector<int> pixelLocation;   //区域的各个像素位置
 
 	int pixelnum;   //像素数（面积）
 	int borderLength; //边长
@@ -25,6 +25,16 @@ public:
 	}
 protected:
 private:
+};
+
+class CGeoObjecgt
+{
+public:
+	int id;
+	vector<int> pixelLocation;
+	int corePixelLocation;     //核心像素位置
+	
+	vector<int> cmpRegion;     //对应的区域
 };
 
 class GraphNode
@@ -51,6 +61,9 @@ private:
 
 int CalculateRegionNum(int* labels, int width, int height)
 {
+	/*
+	*计算区域总数
+	*/
 	int regionNum = 0;
 	for(int i = 0; i<height; i++)
 		for(int j = 0; j<width; j++)
@@ -69,12 +82,12 @@ void CreateRegionSet(int* labels, Mat &srimg, CRegion* cRegion, int regionNum, i
 	for (int i = 0;i<height;i++)
 		for (int j = 0;j<width;j++)
 		{
-			cRegion[labels[i*width + j]].poxelLocation.push_back(i*width+j);
+			cRegion[labels[i*width + j]].pixelLocation.push_back(i*width+j);
 		}
 
 	for (int i = 0; i<regionNum; i++)
 	{
-		cRegion[i].pixelnum = cRegion[i].poxelLocation.size();
+		cRegion[i].pixelnum = cRegion[i].pixelLocation.size();
 	}
 }
 
@@ -120,4 +133,13 @@ void CreateToplogicalGraph(int* labels, ArrayHeadGraphNode* head, int regionNum,
 				}
 			}
 		}
+}
+
+void createGeoObjectSet(int* labels, CGeoObjecgt* cGeoObject, int width, int height)
+{
+	/*
+	*建立参考地物对象集合
+	*/
+
+
 }
