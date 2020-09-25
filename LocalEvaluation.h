@@ -192,3 +192,16 @@ void createGeoObjectSet(int* rg_labels, vector<CGeoObject> & cGeoObject, int wid
 			}
 	} while (over == false);
 }
+
+void SortPixel(vector<CGeoObject> & cGeoObject, CRegion* cRegion, int regionNum)
+{
+	/*
+	*将区域和参考地物包含的像素进行排序
+	*降低取并集的时间复杂度
+	*/
+	for (int i = 0; i<regionNum; i++)
+		sort(cRegion[i].pixelLocation.begin(), cRegion[i].pixelLocation.end());
+	vector<CGeoObject>::iterator it;
+	for (it = cGeoObject.begin(); it!= cGeoObject.end(); it++)
+		sort(it->pixelLocation.begin(), it->pixelLocation.end());
+}

@@ -11,6 +11,7 @@
 #include <list>
 #include <vector>
 #include <cstdlib>
+#include <algorithm>
 #include <forward_list>
 #include <cmath>
 #include <time.h>
@@ -82,6 +83,9 @@ int main()
 	vector<CGeoObject> cGeoObject;
 	createGeoObjectSet(rg_labels, cGeoObject, width, height);
 	CheckGeoObject(cGeoObject);
+	SortPixel(cGeoObject, cRegion, regionNum);
+	CheckSort(cGeoObject, cRegion);
+
 
 	system("pause");
 	return 0;

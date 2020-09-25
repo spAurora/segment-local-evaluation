@@ -58,3 +58,34 @@ void CheckGeoObject(vector<CGeoObject> & cGeoObject)
 	printf("RG num:%d\n", cGeoObject.size());
 	printf("cGeoObject[0] size:%d\n", cGeoObject[0].pixelLocation.size());
 }
+
+void CheckSort(vector<CGeoObject> & cGeoObject, CRegion* cRegion)
+{
+	printf("-----------\n");
+	printf("check sort result:\n");
+	printf("cGeoObject[0] pixel location:");
+	if (!cGeoObject.empty())
+	{
+		vector<int>::iterator it;
+		int ctl = 0;
+		for (it = cGeoObject[0].pixelLocation.begin(); it!= cGeoObject[0].pixelLocation.end(); it++)
+		{
+			ctl++;
+			printf("%d->", *it);
+			if(ctl == 5)
+				break;
+		}
+		printf("\n");
+	}
+	printf("cRegion[0] pixel location:");
+	vector<int>::iterator it;
+	int ctl = 0;
+	for (it = cRegion[0].pixelLocation.begin(); it != cRegion[0].pixelLocation.end(); it++)
+	{
+		ctl++;
+		printf("%d->", *it);
+		if(ctl == 5)
+			break;
+	}
+	printf("\n");
+}

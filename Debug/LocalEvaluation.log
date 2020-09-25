@@ -1,4 +1,4 @@
-﻿生成启动时间为 2020/9/25 20:41:17。
+﻿生成启动时间为 2020/9/25 21:27:20。
      1>项目“D:\segment-local-evaluation\LocalEvaluation.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\LocalEvaluation.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
@@ -7,9 +7,9 @@
          LocalEvaluation.cpp
      1>c:\opencv2.2\include\opencv2\flann\logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
-     1>d:\segment-local-evaluation\localevaluation.cpp(59): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>d:\segment-local-evaluation\localevaluation.cpp(60): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
-     1>d:\segment-local-evaluation\localevaluation.cpp(66): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>d:\segment-local-evaluation\localevaluation.cpp(67): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(253) : 参见“fscanf”的声明
        ManifestResourceCompile:
          所有输出均为最新。
@@ -29,4 +29,4 @@
 
 生成成功。
 
-已用时间 00:00:01.55
+已用时间 00:00:01.56
