@@ -19,6 +19,7 @@
 #include "cv.h"
 
 #include "LocalEvaluation.h"
+#include "Check.h"
 
 using namespace cv;
 
@@ -44,22 +45,26 @@ int main()
 	FILE* fp; 
 	if((fp = fopen("./test_data/RS.txt", "r+")) == NULL)
 	{
-		printf("无法打开已知阈值序列\n");
+		printf("无法打开分割结果文件\n");
 		exit(-1);
 	}
 	for(int i = 0; i<height; i++)
 		for(int j = 0; j<width; j++)
 			fscanf(fp, "%d", &labels[i*width+j]);
+    
+	/*统计区域总数*/
+	int regionNum = CalculateRegionNum(labels, width, height);
+	CheckRegionNum(regionNum);
 
-	int regionNum = 0;
-	for(int i = 0; i<height; i++)
-		for(int j = 0; j<width; j++)
-			if (labels[i*width + j] > regionNum)
-				regionNum = labels[i*width + j];
-	regionNum++;   //区域0开始计数
-	printf("check regionNum:%d\n", regionNum);
-
+	/*建立区域集合、统计区域信息、建立区域拓扑图*/
 	CRegion* cRegion = new CRegion[regionNum]; 
+	ArrayHeadGraphNode *head = new ArrayHeadGraphNode[regionNum];
 
+	CreateRegionSet(labels, srimg, cRegion, regionNum, width, height);
+	CreateToplogicalGraph(labels, head, regionNum, width, height);
+	CheckRegionSet(cRegion);
+	CheckGplot(head);
+
+	system("pause");
 	return 0;
 }
