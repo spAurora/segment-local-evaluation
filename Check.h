@@ -51,3 +51,10 @@ void CheckGplot(ArrayHeadGraphNode* head)
 		printf("%d -> ", it->ID);
 	printf("\n");
 }
+
+void CheckGeoObject(vector<CGeoObject> & cGeoObject)
+{
+	printf("-----------\n");
+	printf("RG num:%d\n", cGeoObject.size());
+	printf("cGeoObject[0] size:%d\n", cGeoObject[0].pixelLocation.size());
+}

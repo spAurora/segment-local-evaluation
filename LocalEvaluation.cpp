@@ -79,6 +79,9 @@ int main()
 	CheckGplot(head);
 
 	/*建立参考地物对象集合*/
+	vector<CGeoObject> cGeoObject;
+	createGeoObjectSet(rg_labels, cGeoObject, width, height);
+	CheckGeoObject(cGeoObject);
 
 	system("pause");
 	return 0;

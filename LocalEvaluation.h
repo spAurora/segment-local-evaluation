@@ -27,7 +27,7 @@ protected:
 private:
 };
 
-class CGeoObjecgt
+class CGeoObject
 {
 public:
 	int id;
@@ -135,11 +135,60 @@ void CreateToplogicalGraph(int* labels, ArrayHeadGraphNode* head, int regionNum,
 		}
 }
 
-void createGeoObjectSet(int* labels, CGeoObjecgt* cGeoObject, int width, int height)
+
+void FillPixel(CGeoObject* temp_GeoObject, int* rg_labels_cpy, int width, int height, int i, int j)
+{
+	/*
+	*递归向参考地物对象中填充像素
+	*参考地物对象为四连通
+	*/
+	rg_labels_cpy[i*width+j] = 0;                        //把当前像素值改为背景值
+	temp_GeoObject->pixelLocation.push_back(i*width+j);  //像素填充
+	if (i-1 >= 0)
+		if (rg_labels_cpy[(i-1)*width+j] == 255)
+			FillPixel(temp_GeoObject,rg_labels_cpy, width, height, i-1, j);
+	if (j-1 >= 0)
+		if (rg_labels_cpy[i*width+j-1] == 255)
+			FillPixel(temp_GeoObject, rg_labels_cpy, width, height, i, j-1);
+	if (i+1 <= height)
+		if (rg_labels_cpy[(i+1)*width+j] == 255)
+			FillPixel(temp_GeoObject, rg_labels_cpy, width, height, i+1, j);
+	if (j+1 <= width)
+		if (rg_labels_cpy[i*width+j+1] == 255)
+			FillPixel(temp_GeoObject, rg_labels_cpy, width, height, i, j+1);
+}
+
+void createGeoObjectSet(int* rg_labels, vector<CGeoObject> & cGeoObject, int width, int height)
 {
 	/*
 	*建立参考地物对象集合
 	*/
+	int* rg_labels_cpy = new int[width*height];
+	for (int i = 0; i<height; i++)
+		for (int j = 0; j<width; j++)
+			rg_labels_cpy[i*width+j] = rg_labels[i*width+j];
 
-
+	bool over = false;
+	int RG_id = -1;
+	do 
+	{
+		for (int i = 0; i<height; i++)
+			for (int j = 0; j<width; j++)
+			{
+				if (rg_labels_cpy[i*width+j] == 255)
+				{
+					RG_id++;			//增加一个参考地物对象
+					CGeoObject temp_GeoObject;
+					temp_GeoObject.id = RG_id;    //临时对象填充ID
+					FillPixel(&temp_GeoObject, rg_labels_cpy, width, height, i, j);   //把所有邻接像素装载进该参考地物对象中
+					cGeoObject.push_back(temp_GeoObject);//临时对象加入容器
+					goto here;          //跳出双重循环
+				}
+			}
+		over = true;   //无额外参考地物
+		here:
+			{
+				
+			}
+	} while (over == false);
 }
