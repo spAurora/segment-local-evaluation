@@ -89,3 +89,19 @@ void CheckSort(vector<CGeoObject> & cGeoObject, CRegion* cRegion)
 	}
 	printf("\n");
 }
+
+void CheckMatchRegion(vector<CGeoObject> & cGeoObject)
+{
+	printf("-----------\n");
+	printf("check match region:\n");
+	vector<int>::iterator it;
+	int ctl = 0;
+	for (it = cGeoObject[0].cmpRegion.begin(); it != cGeoObject[0].cmpRegion.end(); it++)
+	{
+		ctl++;
+		printf("%d->", *it);
+		if(ctl == 5)
+			break;
+	}
+	printf("\n");
+}

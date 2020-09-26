@@ -85,6 +85,8 @@ int main()
 	CheckGeoObject(cGeoObject);
 	SortPixel(cGeoObject, cRegion, regionNum);
 	CheckSort(cGeoObject, cRegion);
+	MatchRegionAndGeoObject(cGeoObject, cRegion, regionNum);
+	CheckMatchRegion(cGeoObject);
 
 
 	system("pause");

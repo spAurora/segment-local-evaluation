@@ -4,7 +4,7 @@
 //	751984964@qq.com
 //////////////////////////////////////////////////////////////////////////
 
-using namespace std;
+//using namespace std;
 using namespace cv;
 
 class CRegion
@@ -79,6 +79,8 @@ void CreateRegionSet(int* labels, Mat &srimg, CRegion* cRegion, int regionNum, i
 	*创建区域集合
 	*初步统计区域信息
 	*/
+	for (int i = 0; i<regionNum; i++)
+		cRegion[i].id = i;
 	for (int i = 0;i<height;i++)
 		for (int j = 0;j<width;j++)
 		{
@@ -204,4 +206,43 @@ void SortPixel(vector<CGeoObject> & cGeoObject, CRegion* cRegion, int regionNum)
 	vector<CGeoObject>::iterator it;
 	for (it = cGeoObject.begin(); it!= cGeoObject.end(); it++)
 		sort(it->pixelLocation.begin(), it->pixelLocation.end());
+}
+
+void MatchRegionAndGeoObject(vector<CGeoObject> & cGeoObject, CRegion* cRegion, int regionNum)
+{
+	/*
+	*匹配区域和参考地物对象
+	*/
+	vector<CGeoObject>::iterator it;
+	for (it = cGeoObject.begin(); it!= cGeoObject.end(); it++)
+	{
+		for (int i = 0; i<regionNum; i++)
+		{
+			if (*(cRegion[i].pixelLocation.end() - 1) < *(it->pixelLocation.begin()) || *(it->pixelLocation.end() - 1) < *(cRegion[i].pixelLocation.begin()))
+			{
+				//printf("%d %d %d %d\n", *(cRegion[i].pixelLocation.end() - 1), *(it->pixelLocation.begin()), *(it->pixelLocation.end() - 1), *(cRegion[i].pixelLocation.begin()));
+				continue;    //无交集直接跳过
+			}
+			vector<int>::iterator it_1 = it->pixelLocation.begin();
+			vector<int>::iterator it_2 = cRegion[i].pixelLocation.begin();
+			while(it_1 != it->pixelLocation.end() && it_2 != cRegion[i].pixelLocation.end())  //寻找相同的像素
+			{
+				if (*it_1 > *it_2)
+				{
+					it_2++;
+					continue;
+				}
+				if (*it_2 > *it_1)
+				{
+					*it_1++;
+					continue;
+				}
+				if (*it_1 == *it_2)   //完成匹配 填充并退出
+				{
+					it->cmpRegion.push_back(cRegion[i].id);
+					break;
+				}
+			}
+		}
+	}
 }
