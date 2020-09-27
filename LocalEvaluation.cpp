@@ -83,11 +83,15 @@ int main()
 	vector<CGeoObject> cGeoObject;
 	createGeoObjectSet(rg_labels, cGeoObject, width, height);
 	CheckGeoObject(cGeoObject);
+	/*像素排序*/
 	SortPixel(cGeoObject, cRegion, regionNum);
 	CheckSort(cGeoObject, cRegion);
+	/*匹配区域和参考地物对象*/
 	MatchRegionAndGeoObject(cGeoObject, cRegion, regionNum);
 	CheckMatchRegion(cGeoObject);
 
+	SetRegionAndGeoObjectInfo(cGeoObject, cRegion, regionNum, 0.2);
+	CheckES(cGeoObject);
 
 	system("pause");
 	return 0;

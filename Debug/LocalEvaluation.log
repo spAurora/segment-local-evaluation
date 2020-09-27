@@ -1,12 +1,17 @@
-﻿生成启动时间为 2020/9/26 17:22:02。
+﻿生成启动时间为 2020/9/27 11:07:59。
      1>项目“D:\segment-local-evaluation\LocalEvaluation.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
-         正在对“Debug\LocalEvaluation.unsuccessfulbuild”执行 Touch 任务。
+         正在创建“Debug\LocalEvaluation.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt LocalEvaluation.cpp
          LocalEvaluation.cpp
      1>c:\opencv2.2\include\opencv2\flann\logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
+     1>d:\segment-local-evaluation\localevaluation.h(259): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\segment-local-evaluation\localevaluation.h(262): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\segment-local-evaluation\localevaluation.h(291): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\segment-local-evaluation\localevaluation.h(292): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\segment-local-evaluation\check.h(115): warning C4018: “<”: 有符号/无符号不匹配
      1>d:\segment-local-evaluation\localevaluation.cpp(60): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
      1>d:\segment-local-evaluation\localevaluation.cpp(67): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
@@ -29,4 +34,4 @@
 
 生成成功。
 
-已用时间 00:00:01.63
+已用时间 00:00:01.66

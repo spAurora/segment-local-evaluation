@@ -13,14 +13,14 @@ public:
 	int id;   //区域编号
 	vector<int> pixelLocation;   //区域的各个像素位置
 
-	int pixelnum;   //像素数（面积）
+	int pixelNum;   //像素数（面积）
 	int borderLength; //边长
 
 	CRegion()  //无参构造
 	{
 		id = -1;
 
-		pixelnum = 0;
+		pixelNum = 0;
 		borderLength = 0;
 	}
 protected:
@@ -32,9 +32,12 @@ class CGeoObject
 public:
 	int id;
 	vector<int> pixelLocation;
-	int corePixelLocation;     //核心像素位置
 	
+	int corePixelLocation;     //核心像素位置
+	int pixelNum;              //像素数
 	vector<int> cmpRegion;     //对应的区域
+	vector<bool> iFEG;         //是否为有效分割
+	vector<int> matchPixel;    //对应区域匹配的像素数
 };
 
 class GraphNode
@@ -77,7 +80,6 @@ void CreateRegionSet(int* labels, Mat &srimg, CRegion* cRegion, int regionNum, i
 {
 	/*
 	*创建区域集合
-	*初步统计区域信息
 	*/
 	for (int i = 0; i<regionNum; i++)
 		cRegion[i].id = i;
@@ -86,11 +88,6 @@ void CreateRegionSet(int* labels, Mat &srimg, CRegion* cRegion, int regionNum, i
 		{
 			cRegion[labels[i*width + j]].pixelLocation.push_back(i*width+j);
 		}
-
-	for (int i = 0; i<regionNum; i++)
-	{
-		cRegion[i].pixelnum = cRegion[i].pixelLocation.size();
-	}
 }
 
 void CreateToplogicalGraph(int* labels, ArrayHeadGraphNode* head, int regionNum, int width, int height)
@@ -219,10 +216,7 @@ void MatchRegionAndGeoObject(vector<CGeoObject> & cGeoObject, CRegion* cRegion, 
 		for (int i = 0; i<regionNum; i++)
 		{
 			if (*(cRegion[i].pixelLocation.end() - 1) < *(it->pixelLocation.begin()) || *(it->pixelLocation.end() - 1) < *(cRegion[i].pixelLocation.begin()))
-			{
-				//printf("%d %d %d %d\n", *(cRegion[i].pixelLocation.end() - 1), *(it->pixelLocation.begin()), *(it->pixelLocation.end() - 1), *(cRegion[i].pixelLocation.begin()));
 				continue;    //无交集直接跳过
-			}
 			vector<int>::iterator it_1 = it->pixelLocation.begin();
 			vector<int>::iterator it_2 = cRegion[i].pixelLocation.begin();
 			while(it_1 != it->pixelLocation.end() && it_2 != cRegion[i].pixelLocation.end())  //寻找相同的像素
@@ -234,7 +228,7 @@ void MatchRegionAndGeoObject(vector<CGeoObject> & cGeoObject, CRegion* cRegion, 
 				}
 				if (*it_2 > *it_1)
 				{
-					*it_1++;
+					it_1++;
 					continue;
 				}
 				if (*it_1 == *it_2)   //完成匹配 填充并退出
@@ -245,4 +239,61 @@ void MatchRegionAndGeoObject(vector<CGeoObject> & cGeoObject, CRegion* cRegion, 
 			}
 		}
 	}
+}
+
+
+void SetRegionAndGeoObjectInfo(vector<CGeoObject> & cGeoObject, CRegion* cRegion, int regionNum, double TES)
+{
+	/*
+	*设置区域和地物对象的信息
+	*完成区域和地物对象构建后统一计算
+	*计算ES
+	*/
+	for (int i = 0; i<regionNum; i++)
+		cRegion[i].pixelNum = cRegion[i].pixelLocation.size();
+	vector<CGeoObject>::iterator it;
+	for (it = cGeoObject.begin(); it!= cGeoObject.end(); it++)
+		it->pixelNum = it->pixelLocation.size();
+
+	 
+	for (int i = 0; i<cGeoObject.size(); i++)
+	{
+		//vector<int>::iterator it_1 = cGeoObject[i].pixelLocation.begin();   //错误的位置
+		for (int j = 0; j<cGeoObject[i].cmpRegion.size(); j++)
+		{
+			cGeoObject[i].matchPixel.push_back(0);
+
+			vector<int>::iterator it_1 = cGeoObject[i].pixelLocation.begin();
+			vector<int>::iterator it_2 = cRegion[cGeoObject[i].cmpRegion[j]].pixelLocation.begin();	
+			
+
+			while(it_1 != cGeoObject[i].pixelLocation.end() && it_2 != cRegion[cGeoObject[i].cmpRegion[j]].pixelLocation.end()) //cGeoObject[i].cmpRegion[j]为下标
+			{
+				if (*it_1 > *it_2)
+				{
+					it_2++;
+					continue;
+				}
+				if (*it_2 > *it_1)
+				{
+					it_1++;
+					continue;
+				}
+				if (*it_1 == *it_2)   //统计
+				{
+					cGeoObject[i].matchPixel[j]++;   
+					it_1++;
+					it_2++;
+				}
+			}
+		}
+	}
+	for (int i = 0; i<cGeoObject.size(); i++)
+		for (int j = 0; j<cGeoObject[i].cmpRegion.size(); j++)
+		{
+			if ((double)cGeoObject[i].matchPixel[j] /(double) cRegion[cGeoObject[i].cmpRegion[j]].pixelNum >= TES)
+				cGeoObject[i].iFEG.push_back(true);
+			else
+				cGeoObject[i].iFEG.push_back(false);
+		}
 }

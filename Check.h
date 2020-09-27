@@ -33,7 +33,7 @@ void CheckRG(int* rg_labels, int width, int height)
 void CheckRegionSet(CRegion* cRegion)
 {
 	printf("-----------\n");
-	printf("check region set:\nregion_0 pixelnum:%d\n", cRegion[0].pixelnum);
+	printf("check region set:\nregion_0 pixelNum:%d\n", cRegion[0].pixelNum);
 }
 
 void CheckGplot(ArrayHeadGraphNode* head)
@@ -100,8 +100,23 @@ void CheckMatchRegion(vector<CGeoObject> & cGeoObject)
 	{
 		ctl++;
 		printf("%d->", *it);
-		if(ctl == 5)
+		if(ctl == 100)
 			break;
 	}
 	printf("\n");
+}
+
+void CheckES(vector<CGeoObject> & cGeoObject)
+{
+	printf("-----------\n");
+	printf("check ES:\n");
+	for (int j = 0; j<3; j++)
+	{
+		for (int i = 0; i<cGeoObject[j].iFEG.size(); i++)
+			if (cGeoObject[j].iFEG[i] == true)
+				printf("true->");
+		else
+			printf("false->");
+		printf("\n");
+	}
 }
