@@ -1,4 +1,4 @@
-﻿生成启动时间为 2020/9/27 18:44:56。
+﻿生成启动时间为 2020/9/27 20:41:28。
      1>项目“D:\segment-local-evaluation\LocalEvaluation.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\LocalEvaluation.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
@@ -13,17 +13,19 @@
      1>d:\segment-local-evaluation\localevaluation.h(309): warning C4018: “<”: 有符号/无符号不匹配
      1>d:\segment-local-evaluation\localevaluation.h(318): warning C4018: “<”: 有符号/无符号不匹配
      1>d:\segment-local-evaluation\localevaluation.h(323): warning C4018: “<”: 有符号/无符号不匹配
-     1>d:\segment-local-evaluation\localevaluation.h(333): warning C4018: “<”: 有符号/无符号不匹配
      1>d:\segment-local-evaluation\localevaluation.h(336): warning C4018: “<”: 有符号/无符号不匹配
-     1>d:\segment-local-evaluation\localevaluation.h(339): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>d:\segment-local-evaluation\localevaluation.h(342): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\segment-local-evaluation\localevaluation.h(339): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\segment-local-evaluation\localevaluation.h(342): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>d:\segment-local-evaluation\localevaluation.h(345): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\segment-local-evaluation\localevaluation.h(359): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\segment-local-evaluation\localevaluation.h(361): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
      1>d:\segment-local-evaluation\check.h(113): warning C4018: “<”: 有符号/无符号不匹配
      1>d:\segment-local-evaluation\check.h(115): warning C4018: “<”: 有符号/无符号不匹配
      1>d:\segment-local-evaluation\check.h(128): warning C4018: “<”: 有符号/无符号不匹配
      1>d:\segment-local-evaluation\check.h(132): warning C4018: “<”: 有符号/无符号不匹配
-     1>d:\segment-local-evaluation\localevaluation.cpp(60): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>d:\segment-local-evaluation\localevaluation.cpp(59): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
-     1>d:\segment-local-evaluation\localevaluation.cpp(67): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>d:\segment-local-evaluation\localevaluation.cpp(66): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(253) : 参见“fscanf”的声明
        ManifestResourceCompile:
          所有输出均为最新。
@@ -43,4 +45,4 @@
 
 生成成功。
 
-已用时间 00:00:02.13
+已用时间 00:00:01.82

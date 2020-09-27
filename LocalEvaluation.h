@@ -264,6 +264,7 @@ void SetRegionAndGeoObjectInfo(vector<CGeoObject> & cGeoObject, CRegion* cRegion
 	*设置区域和地物对象的信息
 	*完成区域和地物对象构建后统一计算
 	*计算ES
+	*计算OSE和USE
 	*/
 	for (int i = 0; i<regionNum; i++)
 		cRegion[i].pixelNum = cRegion[i].pixelLocation.size();
@@ -326,7 +327,10 @@ void SetRegionAndGeoObjectInfo(vector<CGeoObject> & cGeoObject, CRegion* cRegion
 			if (cGeoObject[i].iFEG[j] == true && cGeoObject[i].MAX_intersection < cGeoObject[i].matchPixel[j])
 				cGeoObject[i].MAX_intersection = cGeoObject[i].matchPixel[j];
 		}
-		cGeoObject[i].OSE = cGeoObject[i].f * (1 - cGeoObject[i].MAX_intersection/cGeoObject[i].A);
+		if (cGeoObject[i].MAX_intersection == 0)        //默认无错误分割
+			cGeoObject[i].OSE = 0;
+		else
+			cGeoObject[i].OSE = cGeoObject[i].f * (1 - cGeoObject[i].MAX_intersection/cGeoObject[i].A);
 	}
 	
 	/*USE*/
@@ -343,12 +347,25 @@ void SetRegionAndGeoObjectInfo(vector<CGeoObject> & cGeoObject, CRegion* cRegion
 			if (cGeoObject[i].iFEG[j] == true)
 				cGeoObject[i].extra += cRegion[cGeoObject[i].cmpRegion[j]].pixelNum - cGeoObject[i].intersectionSet[j];
 
-		cGeoObject[i].USE = (double)min(cGeoObject[i].lost + cGeoObject[i].extra, cGeoObject[i].A) / double(cGeoObject[i].A);
+		cGeoObject[i].USE = (double)min(cGeoObject[i].lost + cGeoObject[i].extra, cGeoObject[i].A) / cGeoObject[i].A;
 	}
 
 }
 
 void CalcualteGOSEAndGUSE(vector<CGeoObject> & cGeoObject, double & GOSE, double & GUSE)
 {
-
+	/*
+	*计算GOSE和GUSE
+	*/
+	GOSE = 0;
+	GUSE = 0;
+	int At = 0;
+	for (int i = 0; i<cGeoObject.size(); i++)
+	{	
+		At += cGeoObject[i].A;
+		GOSE += cGeoObject[i].A * cGeoObject[i].OSE; 
+		GUSE += cGeoObject[i].A * cGeoObject[i].USE;
+	}
+	GOSE /= At;
+	GUSE /= At;
 }

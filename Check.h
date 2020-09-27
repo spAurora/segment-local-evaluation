@@ -126,10 +126,15 @@ void CheckOSEUSE(vector<CGeoObject> & cGeoObject)
 	printf("-----------\n");
 	printf("check OSE:\n");
 	for (int j = 0; j<cGeoObject.size(); j++)
-		printf("%lf->\n", cGeoObject[j].OSE);
+		printf("%.3lf\n", cGeoObject[j].OSE);
 	printf("\n");
 	printf("check USE:\n");
 	for (int j = 0; j<cGeoObject.size(); j++)
-		printf("%lf->\n", cGeoObject[j].USE);
-	printf("\n");
+		printf("%.3lf\n", cGeoObject[j].USE);
+}
+
+void CheckGOSEAndGUSE(double GOSE, double GUSE)
+{
+	printf("-----------\n");
+	printf("GOSE = %.3lf, GUSE = %.3lf\n", GOSE, GUSE);
 }

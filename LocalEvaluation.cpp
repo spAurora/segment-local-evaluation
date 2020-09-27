@@ -53,7 +53,6 @@ int main()
 	for(int i = 0; i<height; i++)
 		for(int j = 0; j<width; j++)
 			rg_labels[i*width+j] = (int)RG_img.data[i*width+j];
-	CheckRG(rg_labels, width, height);
 
 	int *labels = new int[height*width];    //以labels方式储存的分割结果
 	FILE* fp; 
@@ -66,6 +65,8 @@ int main()
 		for(int j = 0; j<width; j++)
 			fscanf(fp, "%d", &labels[i*width+j]);
     
+	printf("calculating...\n");
+
 	/*统计区域总数*/
 	int regionNum = CalculateRegionNum(labels, width, height);
 	/*建立区域集合、统计区域信息、建立区域拓扑图*/
@@ -82,8 +83,12 @@ int main()
 	MatchRegionAndGeoObject(cGeoObject, cRegion, regionNum);
 	/*计算区域和地物对象的信息 包括OSE、USE*/
 	SetRegionAndGeoObjectInfo(cGeoObject, cRegion, regionNum, 0.75);
+	/*计算GOSE和GUSE*/
+	double GOSE = 0, GUSE = 0;
+	CalcualteGOSEAndGUSE(cGeoObject, GOSE, GUSE);
 
 	/*检查结果*/
+	CheckRG(rg_labels, width, height);
 	CheckRegionNum(regionNum);
 	CheckRegionSet(cRegion);
 	CheckGplot(head);
@@ -92,6 +97,7 @@ int main()
 	CheckMatchRegion(cGeoObject);
 	CheckES(cGeoObject);
 	CheckOSEUSE(cGeoObject);
+	CheckGOSEAndGUSE(GOSE, GUSE);
 
 	system("pause");
 	return 0;
