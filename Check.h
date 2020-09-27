@@ -110,7 +110,7 @@ void CheckES(vector<CGeoObject> & cGeoObject)
 {
 	printf("-----------\n");
 	printf("check ES:\n");
-	for (int j = 0; j<3; j++)
+	for (int j = 0; j<cGeoObject.size(); j++)
 	{
 		for (int i = 0; i<cGeoObject[j].iFEG.size(); i++)
 			if (cGeoObject[j].iFEG[i] == true)
@@ -119,4 +119,17 @@ void CheckES(vector<CGeoObject> & cGeoObject)
 			printf("false->");
 		printf("\n");
 	}
+}
+
+void CheckOSEUSE(vector<CGeoObject> & cGeoObject)
+{
+	printf("-----------\n");
+	printf("check OSE:\n");
+	for (int j = 0; j<cGeoObject.size(); j++)
+		printf("%lf->\n", cGeoObject[j].OSE);
+	printf("\n");
+	printf("check USE:\n");
+	for (int j = 0; j<cGeoObject.size(); j++)
+		printf("%lf->\n", cGeoObject[j].USE);
+	printf("\n");
 }

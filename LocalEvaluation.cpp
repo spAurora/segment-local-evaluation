@@ -89,9 +89,10 @@ int main()
 	/*匹配区域和参考地物对象*/
 	MatchRegionAndGeoObject(cGeoObject, cRegion, regionNum);
 	CheckMatchRegion(cGeoObject);
-
-	SetRegionAndGeoObjectInfo(cGeoObject, cRegion, regionNum, 0.2);
+	/*计算区域和地物对象的信息*/
+	SetRegionAndGeoObjectInfo(cGeoObject, cRegion, regionNum, 0.75);
 	CheckES(cGeoObject);
+	CheckOSEUSE(cGeoObject);
 
 	system("pause");
 	return 0;

@@ -4,7 +4,9 @@
 //	751984964@qq.com
 //////////////////////////////////////////////////////////////////////////
 
-//using namespace std;
+#define min(a, b) ((a)<(b)?(a):(b))
+
+using namespace std;
 using namespace cv;
 
 class CRegion
@@ -37,7 +39,21 @@ public:
 	int pixelNum;              //像素数
 	vector<int> cmpRegion;     //对应的区域
 	vector<bool> iFEG;         //是否为有效分割
-	vector<int> matchPixel;    //对应区域匹配的像素数
+	vector<int> matchPixel;    //对应区域匹配的像素数 等价于取交集
+	
+	vector<int> intersectionSet; 
+
+	double OSE;
+	double A;
+	double f;
+	int MAX_intersection;
+	
+	int lost;
+	int extra; 
+	double USE;
+
+
+
 };
 
 class GraphNode
@@ -288,6 +304,7 @@ void SetRegionAndGeoObjectInfo(vector<CGeoObject> & cGeoObject, CRegion* cRegion
 			}
 		}
 	}
+
 	for (int i = 0; i<cGeoObject.size(); i++)
 		for (int j = 0; j<cGeoObject[i].cmpRegion.size(); j++)
 		{
@@ -296,4 +313,42 @@ void SetRegionAndGeoObjectInfo(vector<CGeoObject> & cGeoObject, CRegion* cRegion
 			else
 				cGeoObject[i].iFEG.push_back(false);
 		}
+	
+	/*OSE*/
+	for (int i = 0; i<cGeoObject.size(); i++)
+	{
+		cGeoObject[i].A = cGeoObject[i].pixelNum;
+		cGeoObject[i].f = cGeoObject[i].A/(cGeoObject[i].A - 1);
+		cGeoObject[i].MAX_intersection = 0;
+		for (int j =0; j<cGeoObject[i].cmpRegion.size(); j++)
+		{
+			cGeoObject[i].intersectionSet.push_back(cGeoObject[i].matchPixel[j]);
+			if (cGeoObject[i].iFEG[j] == true && cGeoObject[i].MAX_intersection < cGeoObject[i].matchPixel[j])
+				cGeoObject[i].MAX_intersection = cGeoObject[i].matchPixel[j];
+		}
+		cGeoObject[i].OSE = cGeoObject[i].f * (1 - cGeoObject[i].MAX_intersection/cGeoObject[i].A);
+	}
+	
+	/*USE*/
+	for (int i = 0; i<cGeoObject.size(); i++)
+	{
+		int total_intersection = 0;
+		for (int j = 0; j<cGeoObject[i].cmpRegion.size(); j++)
+			if (cGeoObject[i].iFEG[j] == true)
+				total_intersection += cGeoObject[i].intersectionSet[j];
+		cGeoObject[i].lost = cGeoObject[i].A - total_intersection;
+
+		cGeoObject[i].extra = 0;
+		for (int j = 0; j<cGeoObject[i].cmpRegion.size(); j++)
+			if (cGeoObject[i].iFEG[j] == true)
+				cGeoObject[i].extra += cRegion[cGeoObject[i].cmpRegion[j]].pixelNum - cGeoObject[i].intersectionSet[j];
+
+		cGeoObject[i].USE = (double)min(cGeoObject[i].lost + cGeoObject[i].extra, cGeoObject[i].A) / double(cGeoObject[i].A);
+	}
+
+}
+
+void CalcualteGOSEAndGUSE(vector<CGeoObject> & cGeoObject, double & GOSE, double & GUSE)
+{
+
 }
