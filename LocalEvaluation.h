@@ -41,12 +41,12 @@ public:
 	vector<bool> iFEG;         //是否为有效分割
 	vector<int> matchPixel;    //对应区域匹配的像素数 等价于取交集
 	
-	vector<int> intersectionSet; 
+	vector<int> intersectionSet;   //与区域的交集像素数
 
 	double OSE;
-	double A;
-	double f;
-	int MAX_intersection;
+	double A;                   //等价于面积
+	double f;                   
+	int MAX_intersection;       //最大交集数  
 	
 	int lost;
 	int extra; 
@@ -173,7 +173,7 @@ void FillPixel(CGeoObject* temp_GeoObject, int* rg_labels_cpy, int width, int he
 			FillPixel(temp_GeoObject, rg_labels_cpy, width, height, i, j+1);
 }
 
-void createGeoObjectSet(int* rg_labels, vector<CGeoObject> & cGeoObject, int width, int height)
+void CreateGeoObjectSet(int* rg_labels, vector<CGeoObject> & cGeoObject, int width, int height)
 {
 	/*
 	*建立参考地物对象集合
