@@ -21,6 +21,7 @@
 
 #include "LocalEvaluation.h"
 #include "Check.h"
+#include "OutputData.h"
 
 using namespace std;
 using namespace cv;
@@ -86,6 +87,9 @@ int main()
 	/*计算GOSE和GUSE*/
 	double GOSE = 0, GUSE = 0;
 	CalcualteGOSEAndGUSE(cGeoObject, GOSE, GUSE);
+	/*输出OSE和USE*/
+	OutputDataToMatlabVisualization(cGeoObject);
+	OutputOSEUSEVisualization(srimg, cGeoObject, width, height);
 
 	/*检查结果*/
 	CheckRG(rg_labels, width, height);
@@ -98,6 +102,12 @@ int main()
 	CheckES(cGeoObject);
 	CheckOSEUSE(cGeoObject);
 	CheckGOSEAndGUSE(GOSE, GUSE);
+
+	/*释放内存*/
+	delete[] rg_labels;
+	delete[] labels;
+	delete[] cRegion;
+	delete[] head;
 
 	system("pause");
 	return 0;

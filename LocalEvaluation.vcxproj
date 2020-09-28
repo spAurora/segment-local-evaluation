@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClInclude Include="Check.h" />
     <ClInclude Include="LocalEvaluation.h" />
+    <ClInclude Include="OutputData.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

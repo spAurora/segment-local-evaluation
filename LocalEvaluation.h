@@ -35,7 +35,8 @@ public:
 	int id;
 	vector<int> pixelLocation;
 	
-	int corePixelLocation;     //核心像素位置
+	int anchor_x;     //锚定该区域
+	int anchor_y;     
 	int pixelNum;              //像素数
 	vector<int> cmpRegion;     //对应的区域
 	vector<bool> iFEG;         //是否为有效分割
@@ -194,6 +195,8 @@ void CreateGeoObjectSet(int* rg_labels, vector<CGeoObject> & cGeoObject, int wid
 				{
 					RG_id++;			//增加一个参考地物对象
 					CGeoObject temp_GeoObject;
+					temp_GeoObject.anchor_x = i;
+					temp_GeoObject.anchor_y = j;
 					temp_GeoObject.id = RG_id;    //临时对象填充ID
 					FillPixel(&temp_GeoObject, rg_labels_cpy, width, height, i, j);   //把所有邻接像素装载进该参考地物对象中
 					cGeoObject.push_back(temp_GeoObject);//临时对象加入容器
