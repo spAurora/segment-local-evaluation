@@ -18,12 +18,16 @@ public:
 	int pixelNum;   //像素数（面积）
 	int borderLength; //边长
 
+	int maxIntersectionPixelNum;   //用于计算Precision
+
 	CRegion()  //无参构造
 	{
 		id = -1;
 
 		pixelNum = 0;
 		borderLength = 0;
+
+		maxIntersectionPixelNum = 0;
 	}
 protected:
 private:
@@ -353,6 +357,8 @@ void SetRegionAndGeoObjectInfo(vector<CGeoObject> & cGeoObject, CRegion* cRegion
 		cGeoObject[i].USE = (double)min(cGeoObject[i].lost + cGeoObject[i].extra, cGeoObject[i].A) / cGeoObject[i].A;
 	}
 
+
+
 }
 
 void CalcualteGOSEAndGUSE(vector<CGeoObject> & cGeoObject, double & GOSE, double & GUSE)
@@ -371,4 +377,33 @@ void CalcualteGOSEAndGUSE(vector<CGeoObject> & cGeoObject, double & GOSE, double
 	}
 	GOSE /= At;
 	GUSE /= At;
+}
+
+void CalculatePrecisionRecall(CRegion* cRegion, vector<CGeoObject> & cGeoObject,int regionNum, double & Precision, double & Recall)
+{
+	/*
+	*计算Precision And Recall
+	*/
+	/*Precision*/
+	int sum_Pixel = 0, sum_MaxIntersectionPixel = 0;
+	for (int i = 0; i < cGeoObject.size(); i++)   //计算每个区域与各个参考地物最大的交集面积
+		for (int j = 0; j < cGeoObject[i].cmpRegion.size(); j++)
+			if (cRegion[cGeoObject[i].cmpRegion[j]].maxIntersectionPixelNum < cGeoObject[i].matchPixel[j])
+				cRegion[cGeoObject[i].cmpRegion[j]].maxIntersectionPixelNum = cGeoObject[i].matchPixel[j];
+	for (int i = 0; i<regionNum; i++)
+		if (cRegion[i].maxIntersectionPixelNum != 0)
+		{
+			sum_Pixel += cRegion[i].pixelNum;
+			sum_MaxIntersectionPixel += cRegion[i].maxIntersectionPixelNum;
+		}
+	Precision = (double)sum_MaxIntersectionPixel/(double)sum_Pixel;
+
+	/*Recall*/
+	int sum_R_Pixel = 0, sum_R_MaxIntersectionPixel = 0;
+	for (int i = 0; i<cGeoObject.size(); i++)
+	{
+		sum_R_Pixel += cGeoObject[i].pixelNum;
+		sum_R_MaxIntersectionPixel += cGeoObject[i].MAX_intersection;
+	}
+	Recall = (double)sum_R_MaxIntersectionPixel / (double)sum_R_Pixel;
 }

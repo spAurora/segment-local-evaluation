@@ -13,7 +13,7 @@ void OutputDataToMatlabVisualization(vector<CGeoObject> & cGeoObject)
 	*输出用于matlab绘制OSEUSE散点图的数据
 	*/
 	FILE *fp;
-	if((fp = fopen("output_to_matlab.txt", "w+")) == NULL)
+	if((fp = fopen("./output/output_to_matlab.txt", "w+")) == NULL)
 	{
 		printf("打开数据输出失败\n");
 		exit(-1);
@@ -58,6 +58,6 @@ void OutputOSEUSEVisualization(Mat & srimg, vector<CGeoObject> & cGeoObject, int
 			img_USE.data[cGeoObject[i].pixelLocation[j]*3 + 2] = R;
 		}
 	}
-	imwrite("OSE.bmp", img_OSE);
-	imwrite("USE.bmp", img_USE);
+	imwrite("./output/OSE.bmp", img_OSE);
+	imwrite("./output/USE.bmp", img_USE);
 }

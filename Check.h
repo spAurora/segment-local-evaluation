@@ -59,7 +59,7 @@ void CheckGeoObject(vector<CGeoObject> & cGeoObject)
 	printf("cGeoObject[0] size:%d\n", cGeoObject[0].pixelLocation.size());
 }
 
-void CheckSort(vector<CGeoObject> & cGeoObject, CRegion* cRegion)
+void CheckSort(vector<CGeoObject> & cGeoObject, CRegion* cRegion, int checkNum = 5)
 {
 	printf("-----------\n");
 	printf("check sort result:\n");
@@ -72,7 +72,7 @@ void CheckSort(vector<CGeoObject> & cGeoObject, CRegion* cRegion)
 		{
 			ctl++;
 			printf("%d->", *it);
-			if(ctl == 5)
+			if(ctl == checkNum)
 				break;
 		}
 		printf("\n");
@@ -84,13 +84,13 @@ void CheckSort(vector<CGeoObject> & cGeoObject, CRegion* cRegion)
 	{
 		ctl++;
 		printf("%d->", *it);
-		if(ctl == 5)
+		if(ctl == checkNum)
 			break;
 	}
 	printf("\n");
 }
 
-void CheckMatchRegion(vector<CGeoObject> & cGeoObject)
+void CheckMatchRegion(vector<CGeoObject> & cGeoObject, int checkNum = 1024)
 {
 	printf("-----------\n");
 	printf("check match region:\n");
@@ -100,16 +100,17 @@ void CheckMatchRegion(vector<CGeoObject> & cGeoObject)
 	{
 		ctl++;
 		printf("%d->", *it);
-		if(ctl == 100)
+		if(ctl == checkNum)
 			break;
 	}
 	printf("\n");
 }
 
-void CheckES(vector<CGeoObject> & cGeoObject)
+void CheckES(vector<CGeoObject> & cGeoObject, int checkNum = 1024)
 {
 	printf("-----------\n");
 	printf("check ES:\n");
+	int ctl = 0;
 	for (int j = 0; j<cGeoObject.size(); j++)
 	{
 		for (int i = 0; i<cGeoObject[j].iFEG.size(); i++)
@@ -118,23 +119,44 @@ void CheckES(vector<CGeoObject> & cGeoObject)
 		else
 			printf("false->");
 		printf("\n");
+		ctl++;
+		if(ctl == checkNum)
+			break;
 	}
 }
 
-void CheckOSEUSE(vector<CGeoObject> & cGeoObject)
+void CheckOSEUSE(vector<CGeoObject> & cGeoObject, int checkNum = 1024)
 {
 	printf("-----------\n");
 	printf("check OSE:\n");
+	int ctl = 0;
 	for (int j = 0; j<cGeoObject.size(); j++)
+	{
 		printf("%.3lf\n", cGeoObject[j].OSE);
+		ctl++;
+		if(ctl == checkNum)
+			break;
+	}
 	printf("\n");
+	ctl = 0;
 	printf("check USE:\n");
 	for (int j = 0; j<cGeoObject.size(); j++)
+	{
 		printf("%.3lf\n", cGeoObject[j].USE);
+		ctl++;
+		if(ctl == checkNum)
+			break;
+	}
 }
 
 void CheckGOSEAndGUSE(double GOSE, double GUSE)
 {
 	printf("-----------\n");
 	printf("GOSE = %.3lf, GUSE = %.3lf\n", GOSE, GUSE);
+}
+
+void CheckPrecisionRecall(double Precision, double Recall)
+{
+	printf("-----------\n");
+	printf("PRECISION = %.3lf, RECALL = %.3lf\n", Precision, Recall);
 }

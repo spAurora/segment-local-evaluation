@@ -32,8 +32,10 @@ int main()
 {
 	int width, height;
 	Mat srimg, RG_img;
+	double TES = 0.75;   //判别ES的阈值
+	int checkNum = 5;    //控制检查元素的个数
 
-	srimg = imread("./test_data/test_img.png",1);
+	srimg = imread("./data/test_img.png",1);
 	if (srimg.empty())
 	{
 		printf("Can not open Image\n");
@@ -43,7 +45,7 @@ int main()
 	width = srimg.cols;
 	height = srimg.rows;
 
-	RG_img = imread("./test_data/RG.bmp",0);
+	RG_img = imread("./data/RG.bmp",0);
 	if (RG_img.empty())
 	{
 		printf("Can not open Image\n");
@@ -57,7 +59,7 @@ int main()
 
 	int *labels = new int[height*width];    //以labels方式储存的分割结果
 	FILE* fp; 
-	if((fp = fopen("./test_data/RS.txt", "r+")) == NULL)
+	if((fp = fopen("./data/RS.txt", "r+")) == NULL)
 	{
 		printf("无法打开分割结果文件\n");
 		exit(-1);
@@ -83,11 +85,14 @@ int main()
 	/*匹配区域和参考地物对象*/
 	MatchRegionAndGeoObject(cGeoObject, cRegion, regionNum);
 	/*计算区域和地物对象的信息 包括OSE、USE*/
-	SetRegionAndGeoObjectInfo(cGeoObject, cRegion, regionNum, 0.75);
+	SetRegionAndGeoObjectInfo(cGeoObject, cRegion, regionNum, TES);
 	/*计算GOSE和GUSE*/
 	double GOSE = 0, GUSE = 0;
 	CalcualteGOSEAndGUSE(cGeoObject, GOSE, GUSE);
-	/*输出OSE和USE*/
+	/*计算Precision和Recall*/
+	double PRECISION = 0, RECALL = 0;
+	CalculatePrecisionRecall(cRegion,cGeoObject,regionNum,PRECISION,RECALL);
+	/*输出结果*/
 	OutputDataToMatlabVisualization(cGeoObject);
 	OutputOSEUSEVisualization(srimg, cGeoObject, width, height);
 
@@ -99,9 +104,10 @@ int main()
 	CheckGeoObject(cGeoObject);
 	CheckSort(cGeoObject, cRegion);
 	CheckMatchRegion(cGeoObject);
-	CheckES(cGeoObject);
-	CheckOSEUSE(cGeoObject);
+	CheckES(cGeoObject, 5);
+	CheckOSEUSE(cGeoObject, 5);
 	CheckGOSEAndGUSE(GOSE, GUSE);
+	CheckPrecisionRecall(PRECISION, RECALL);
 
 	/*释放内存*/
 	delete[] rg_labels;
