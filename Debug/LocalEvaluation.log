@@ -1,4 +1,4 @@
-﻿生成启动时间为 2020/9/29 11:21:46。
+﻿生成启动时间为 2020/9/29 15:33:58。
      1>项目“D:\segment-local-evaluation\LocalEvaluation.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\LocalEvaluation.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
@@ -53,4 +53,4 @@
 
 生成成功。
 
-已用时间 00:00:01.74
+已用时间 00:00:02.34

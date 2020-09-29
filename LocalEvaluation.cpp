@@ -90,8 +90,8 @@ int main()
 	double GOSE = 0, GUSE = 0;
 	CalcualteGOSEAndGUSE(cGeoObject, GOSE, GUSE);
 	/*计算Precision和Recall*/
-	double PRECISION = 0, RECALL = 0;
-	CalculatePrecisionRecall(cRegion,cGeoObject,regionNum,PRECISION,RECALL);
+	double PRECISION = 0, RECALL = 0, F1 = 0;
+	CalculatePrecisionRecall(cRegion,cGeoObject,regionNum,PRECISION,RECALL, F1);
 	/*输出结果*/
 	OutputDataToMatlabVisualization(cGeoObject);
 	OutputOSEUSEVisualization(srimg, cGeoObject, width, height);
@@ -107,7 +107,7 @@ int main()
 	CheckES(cGeoObject, 5);
 	CheckOSEUSE(cGeoObject, 5);
 	CheckGOSEAndGUSE(GOSE, GUSE);
-	CheckPrecisionRecall(PRECISION, RECALL);
+	CheckPrecisionRecall(PRECISION, RECALL, F1);
 
 	/*释放内存*/
 	delete[] rg_labels;

@@ -379,7 +379,7 @@ void CalcualteGOSEAndGUSE(vector<CGeoObject> & cGeoObject, double & GOSE, double
 	GUSE /= At;
 }
 
-void CalculatePrecisionRecall(CRegion* cRegion, vector<CGeoObject> & cGeoObject,int regionNum, double & Precision, double & Recall)
+void CalculatePrecisionRecall(CRegion* cRegion, vector<CGeoObject> & cGeoObject,int regionNum, double & Precision, double & Recall, double & F1)
 {
 	/*
 	*º∆À„Precision And Recall
@@ -406,4 +406,6 @@ void CalculatePrecisionRecall(CRegion* cRegion, vector<CGeoObject> & cGeoObject,
 		sum_R_MaxIntersectionPixel += cGeoObject[i].MAX_intersection;
 	}
 	Recall = (double)sum_R_MaxIntersectionPixel / (double)sum_R_Pixel;
+
+	F1 = 2*Precision*Recall/(Precision+Recall);
 }

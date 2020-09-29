@@ -155,8 +155,8 @@ void CheckGOSEAndGUSE(double GOSE, double GUSE)
 	printf("GOSE = %.3lf, GUSE = %.3lf\n", GOSE, GUSE);
 }
 
-void CheckPrecisionRecall(double Precision, double Recall)
+void CheckPrecisionRecall(double Precision, double Recall, double F1)
 {
 	printf("-----------\n");
-	printf("PRECISION = %.3lf, RECALL = %.3lf\n", Precision, Recall);
+	printf("PRECISION = %.3lf, RECALL = %.3lf F1 = %.3lf\n", Precision, Recall, F1);
 }
